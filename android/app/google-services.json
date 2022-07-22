@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "119722312459",
+    "project_id": "logandres-36abf",
+    "storage_bucket": "logandres-36abf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:119722312459:android:468156320c9a0dd23c580e",
+        "android_client_info": {
+          "package_name": "com.example.login_register"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "119722312459-i3f1e8rmhp5lq4kp8pjm53oo0hslfg80.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvwT7CEPQFJWeaP9Oa0iA--cXrbQ48k4k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "119722312459-i3f1e8rmhp5lq4kp8pjm53oo0hslfg80.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
