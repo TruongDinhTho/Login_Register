@@ -1,45 +1,30 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:login_register/authentication_bloc/bloc/authentication_event.dart';
 import 'package:login_register/authentication_bloc/bloc/authentication_state.dart';
 import 'package:login_register/repository/user_repositories.dart';
 
-
-class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> {
-   final UserRepository? _userRepository;
-  AuthenticationBloc(UserRepository userRepository) : _userRepository = userRepository, super(AuthenticationInitial());
+class AuthBloc extends Bloc<AuthEvent, AuthState> {
+  UserRepository? userRepository;
+  AuthBloc({this.userRepository}) : super(AuthInitial());
 
   @override
-  Stream<AuthenticationState> mapEventToState(AuthenticationEvent event) async* {
-    print(event);
-    if(event is AuthenticatonStarted) {
-        yield* _mapAuthenticationStartedToState();
-    } else if (event is AuthenticatonLoggedIn) {
-      yield* _mapAuthenticationLoggedInToState();
-    } else if (event is AuthenticatonLoggedOut) {
-      yield* _mapAuthenticationLoggedOutToState();
+  Stream<AuthState> mapEventToState(
+    AuthEvent event,
+  ) async* {
+    if (event is AppLoaded) {
+      try {
+        var isSignedIn = await userRepository?.isSignedIn();
+
+        if (isSignedIn!) {
+          var user = await userRepository?.getCurrentUser();
+
+          yield AuthenticateState(user: user!);
+        } else {
+          yield UnAuthenticateState();
+        }
+      } catch (e) {
+        yield UnAuthenticateState();
+      }
     }
   }
-
-  //AuthenticatonLoggedIn
-  Stream<AuthenticationState> _mapAuthenticationLoggedInToState() async* {
-    yield AuthenticationSuccess(await _userRepository!.getUser());
-  }
-
-  //AuthenticatonLoggedOut
-  Stream<AuthenticationState> _mapAuthenticationLoggedOutToState() async* {
-    yield AuthenticationFailure();
-    _userRepository!.signOut();
-  }
-
-  //AuthenticatonStarted
-  Stream<AuthenticationState> _mapAuthenticationStartedToState() async* {
-      final isSignedIn = await _userRepository!.isSignedIn();
-      if(isSignedIn) {
-        final firebaseUser = await _userRepository!.getUser();
-        yield AuthenticationSuccess(firebaseUser);
-      } else {
-        yield AuthenticationFailure();
-      }
-  }
-
 }

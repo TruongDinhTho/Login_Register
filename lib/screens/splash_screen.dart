@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:login_register/screens/sign_in_screen.dart';
+import 'package:login_register/screens/sign_up_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({ Key? key }) : super(key: key);
@@ -17,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Column(
             children: [
               Container(
-                height: 400,
+                height: 350,
                 width: 300,
                 decoration: BoxDecoration(
                   image: DecorationImage(
@@ -26,34 +28,41 @@ class _SplashScreenState extends State<SplashScreen> {
                 ),
                 child: Column(
                   children: [
-                    SizedBox(height: 120.0),
+                    SizedBox(height: 100),
                     ElevatedButton(
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(
-                          Color(0xFFff7b00),
-                        )
+                          Color(0XFFff5c8a),
+                        ),
                       ),
-                      onPressed: (){}, 
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => SignInScreen()));
+                      },
                       child: Text('Sign In'),
                     ),
-                    SizedBox(height: 15.0),
+                    SizedBox(height: 15),
                     ElevatedButton(
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(
                           Color(0xFFff7b00),
                         ),
                       ),
-                      onPressed: (){}, 
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => SignUpScreen()));
+                      },
                       child: Text('Sign Up'),
                     ),
                   ],
                 ),
               ),
-              SizedBox(height: 15.0,),
-              Text('Join Now by sign in or sign up',
-                style: TextStyle(fontSize: 20,color: Colors.amber),
+              SizedBox(height: 15),
+              Text(
+                'Join Now by Sign In Or Sign Out',
+                style: TextStyle(fontSize: 17, color: Colors.amber),
               ),
-              SizedBox(height: 25.0,),
+              SizedBox(height: 25),
               Image.asset('assets/images/unnamed.png')
             ],
           ),

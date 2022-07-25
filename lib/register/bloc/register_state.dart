@@ -1,82 +1,23 @@
-class RegisterState {
-  final bool? isEmailValid;
-  final bool? isPasswordValid;
-  final bool? isSubmitting;
-  final bool? isSuccess;
-  final bool? isFailure;
+import 'package:equatable/equatable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-  RegisterState({required this.isEmailValid,required this.isPasswordValid,required this.isSubmitting,required this.isSuccess,required this.isFailure});
+abstract class RegisterState extends Equatable {
+  const RegisterState();
 
-  bool get isFormValid => isEmailValid! && isPasswordValid!;
+  @override
+  List<Object> get props => [];
+}
 
+class RegisterInitial extends RegisterState {}
 
+class RegisterLoading extends RegisterState {}
 
-  factory RegisterState.initial() {
-    return RegisterState(
-      isEmailValid: true,
-      isPasswordValid: true,
-      isSubmitting: false,
-      isSuccess: false,
-      isFailure: false,
-    );
-  }
-
-  factory RegisterState.loading() {
-    return RegisterState(
-      isEmailValid: true,
-      isPasswordValid: true,
-      isSubmitting: true,
-      isSuccess: false,
-      isFailure: false,
-    );
-  }
-
-  factory RegisterState.failure() {
-    return RegisterState(
-      isEmailValid: true,
-      isPasswordValid: true,
-      isSubmitting: false,
-      isSuccess: false,
-      isFailure: true,
-    );
-  }
-
-  factory RegisterState.success() {
-    return RegisterState(
-      isEmailValid: true,
-      isPasswordValid: true,
-      isSubmitting: false,
-      isSuccess: true,
-      isFailure: false,
-    );
-  }
-
-  RegisterState update({
-    bool? isEmailValid,
-    bool? isPasswordValid,
-  }) {
-    return copyWith(
-      isEmailValid: isEmailValid,
-      isPasswordValid: isPasswordValid,
-      isSubmitting: false,
-      isSuccess: false,
-      isFailure: false,
-    );
-  }
-
-  RegisterState copyWith({
-    bool? isEmailValid,
-    bool? isPasswordValid,
-    bool? isSubmitting,
-    bool? isSuccess,
-    bool? isFailure,
-  }) {
-    return RegisterState(
-      isEmailValid: isEmailValid ?? this.isEmailValid,
-      isPasswordValid: isPasswordValid ?? this.isPasswordValid,
-      isSubmitting: isSubmitting ?? this.isSubmitting,
-      isSuccess: isSuccess ?? this.isSuccess,
-      isFailure: isFailure ?? this.isFailure,
-    );
-  }
+class RegisterSucced extends RegisterState {
+  User user;
+  RegisterSucced({required this.user});
+}
+  
+class RegisterFailed extends RegisterState {
+  String message;
+  RegisterFailed({required this.message});
 }

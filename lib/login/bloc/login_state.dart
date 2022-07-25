@@ -1,67 +1,23 @@
-class LoginState {
-  final bool? isEmailValid;
-  final bool? isPasswordVaild;
-  final bool? isSummiting;
-  final bool? isSuccess;
-  final bool? isFailure;
+import 'package:equatable/equatable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-  bool get isFormValid => isEmailValid! && isPasswordVaild!;
+abstract class LoginState extends Equatable {
+  const LoginState();
 
-  LoginState({required this.isEmailValid,required this.isPasswordVaild,required this.isSummiting,required this.isSuccess,required this.isFailure});
+  @override
+  List<Object> get props => [];
+}
 
-  factory LoginState.initial() {
-    return LoginState(
-      isEmailValid: true,
-      isPasswordVaild: true,
-      isSummiting: false,
-      isSuccess: false,
-      isFailure: false,
-    );
-  }
-  factory LoginState.loading() {
-    return LoginState(
-      isEmailValid: true,
-      isPasswordVaild: true,
-      isSummiting: true,
-      isSuccess: false,
-      isFailure: false,
-    );
-  }
-  factory LoginState.failure() {
-    return LoginState(
-      isEmailValid: true,
-      isPasswordVaild: true,
-      isSummiting: false,
-      isSuccess: false,
-      isFailure: true,
-    );
-  }
-  factory LoginState.success() {
-    return LoginState(
-      isEmailValid: true,
-      isPasswordVaild: true,
-      isSummiting: false,
-      isSuccess: true,
-      isFailure: false,
-    );
-  }
+class LoginInitial extends LoginState {}
 
-  LoginState update(bool? isEmailValid, bool? isPasswordValid) {
-      return copyWith(
-          isEmailValid,
-          isPasswordVaild,
-          false,
-          false,
-          false);
-  }
+class LoginLoading extends LoginState {}
 
-  LoginState copyWith( bool? isEmailVaild, bool? isPasswordVaild, bool? isSumitting, bool? isSuccess, bool? isFailure
-      ){
-        return LoginState(
-            isEmailValid: isEmailVaild ?? this.isEmailValid,
-          isPasswordVaild: isPasswordVaild ?? this.isPasswordVaild,
-          isSummiting: isSumitting ?? this.isSummiting,
-          isSuccess: isSuccess ?? this.isSuccess,
-          isFailure: isFailure ?? this.isFailure);
-  }
+class LoginSucced extends LoginState {
+  User user;
+  LoginSucced({required this.user});
+}
+
+class LoginFailed extends LoginState {
+  String message;
+  LoginFailed({required this.message});
 }
